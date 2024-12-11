@@ -1,5 +1,6 @@
 package ir.famastudio.melodify.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,8 @@ class LoginViewModel @Inject constructor() : ViewModel() {
             _loginStatus.value = repository.apiLogin(body = ApiRequestLogin(username, password))
         }
     }
-    fun saveLoginData(){
+
+    fun saveLoginData() {
         repository.saveLoginData()
     }
 }

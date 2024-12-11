@@ -1,6 +1,7 @@
 package ir.famastudio.melodify.view.screens.login
 
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,6 +32,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ir.famastudio.melodify.view.HomeActivity
 import ir.famastudio.melodify.viewmodel.LoginViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun ViewLogin(viewModel: LoginViewModel = hiltViewModel()) {
@@ -108,7 +111,6 @@ fun ViewLogin(viewModel: LoginViewModel = hiltViewModel()) {
                     contentColor = Color.White
                 ),
                 onClick = {
-                    viewModel.saveLoginData()
                     if (username.value.isNotBlank() && password.value.isNotBlank() && !isLoading.value) {
                         viewModel.login(username.value, password.value)
                         isLoading.value = true
@@ -130,7 +132,7 @@ fun ViewLogin(viewModel: LoginViewModel = hiltViewModel()) {
             color = MaterialTheme.colorScheme.primary,
             fontSize = 20.sp
         )
-        LaunchedEffect(Unit) {
+        LaunchedEffect(loginStatus.value){
             if (loginStatus.value) {
                 viewModel.saveLoginData()
                 context.startActivity(Intent(context,HomeActivity::class.java))

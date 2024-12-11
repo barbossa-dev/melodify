@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import androidx.media3.exoplayer.ExoPlayer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,5 +35,11 @@ class SingleModule {
             .baseUrl("https://melodify.ahmadi-test-app.ir")
             .build()
             .create(ApiInterface::class.java)
+    }
+
+
+    @Provides
+    fun provideExoplayer(@ApplicationContext context: Context): ExoPlayer {
+        return ExoPlayer.Builder(context).build()
     }
 }
